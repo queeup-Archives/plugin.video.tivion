@@ -5,7 +5,7 @@ Debug = False
 
 # Imports
 import sys, re, urllib
-import md5, os, shutil, tempfile, time, errno
+import hashlib, os, shutil, tempfile, time, errno
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 
 __addon__ = xbmcaddon.Addon(id='plugin.video.tivion')
@@ -130,7 +130,7 @@ class DiskCacheFetcher:
     if max_age is None:
       max_age = CACHE_TIME
     # Use MD5 hash of the URL as the filename
-    filename = md5.new(url).hexdigest()
+    filename = hashlib.md5(url).hexdigest()
     filepath = os.path.join(self.cache_dir, filename)
     if os.path.exists(filepath):
       if int(time.time()) - os.path.getmtime(filepath) < max_age:
